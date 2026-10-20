@@ -1,0 +1,16 @@
+Imagens do anúncio Student Advisor (22 s)
+
+Os arquivos cena*.png são PLACEHOLDERS (cor sólida) para o layout. Substitua
+por fotos ou vídeos reais de universidades britânicas e estudantes, com o
+mesmo nome e proporção 1080x1920 (ou me envie os arquivos e eu ajusto):
+
+- cena1-campus.png     Cena 1 (0 a 4 s): campus britânico, estudantes caminhando
+- cena2-biblioteca.png Cena 2 (4 a 10 s): sala de aula ou biblioteca
+- cena3-graduacao.png  Cena 3 (10 a 16 s): estudante comemorando a graduação
+- cena4-sorriso.png    Cena 4 (16 a 22 s): estudante sorrindo no campus
+
+Use somente imagens com licença de uso comercial e sem marcas ou rostos
+identificáveis sem autorização.
+
+narracao.mp3: narração de teste (voz MBROLA, robotizada). Troque pela voz final
+no mesmo nome e duração (22 s).

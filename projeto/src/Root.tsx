@@ -2,6 +2,7 @@ import { Composition } from "remotion";
 import { DURATION_IN_FRAMES, EditaTitle, FPS, HEIGHT, WIDTH } from "./Composition";
 import { DURACAO_QUADROS, EstudarUK } from "./uk/EstudarUK";
 import { DURACAO_QUADROS as DURACAO_STUDY_QUEST, StudyQuest } from "./estudar/StudyQuest";
+import { AnuncioStudentAdvisor, DURACAO_QUADROS as DURACAO_ANUNCIO } from "./anuncio/AnuncioStudentAdvisor";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -26,6 +27,14 @@ export const RemotionRoot: React.FC = () => {
         id="StudyQuest"
         component={StudyQuest}
         durationInFrames={DURACAO_STUDY_QUEST}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+      />
+      <Composition
+        id="AnuncioStudentAdvisor"
+        component={AnuncioStudentAdvisor}
+        durationInFrames={DURACAO_ANUNCIO}
         fps={FPS}
         width={WIDTH}
         height={HEIGHT}
