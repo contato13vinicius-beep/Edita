@@ -34,7 +34,7 @@ Texto completo, sem as indicações de tempo:
 
 > Quer estudar no Reino Unido, mas acha que não cabe no bolso? A graduação dura 3 anos na Inglaterra, no País de Gales e na Irlanda do Norte, e 4 anos na Escócia. A candidatura é pelo UCAS, a plataforma oficial das universidades britânicas. Existem dois empréstimos. O Tuition Fee Loan paga a anuidade, até £9.790 por ano. O Maintenance Loan cobre moradia e custo de vida: até £14.135 por ano, morando longe de casa em Londres, ou £10.830 fora de Londres. O valor depende da renda da família. Atenção: é empréstimo, não bolsa. Você paga de volta depois de formado, só quando a renda passa de um limite. Os cursos são mais curtos, as universidades são reconhecidas no mundo todo, e o ambiente é multicultural. Quer saber se você tem direito? Chama a Márcia no WhatsApp: [número].
 
-**Total: 118 palavras** (abaixo do máximo de 150; ritmo de fala natural em torno de 2,5 palavras por segundo).
+**Total: 138 palavras** (abaixo do máximo de 150; ritmo de fala natural em torno de 2,5 palavras por segundo).
 
 ## Ganchos para escolher
 
