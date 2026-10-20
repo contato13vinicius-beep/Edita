@@ -1,0 +1,10 @@
+Sons de interface em public/sfx (whoosh, pop, impacto, ding, notificacao, clique)
+
+Origem: gerados localmente com ffmpeg (filtros aevalsrc/anoisesrc), sem amostras de terceiros.
+O pack "Interface Sounds" do Kenney (kenney.nl) NAO foi usado: o download foi bloqueado
+no ambiente de geracao. Se quiser trocar pelos sons do Kenney depois, o licenciamento
+dele também é CC0.
+
+Licença: CC0 1.0 Universal (dedicado ao domínio público).
+https://creativecommons.org/publicdomain/zero/1.0/
+Não exige atribuição, mas nenhuma garantia é oferecida.
