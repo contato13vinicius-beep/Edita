@@ -3,7 +3,7 @@ import { DURATION_IN_FRAMES, EditaTitle, FPS, HEIGHT, WIDTH } from "./Compositio
 import { DURACAO_QUADROS, EstudarUK } from "./uk/EstudarUK";
 import { DURACAO_QUADROS as DURACAO_STUDY_QUEST, StudyQuest } from "./estudar/StudyQuest";
 import { AnuncioStudentAdvisor, DURACAO_QUADROS as DURACAO_ANUNCIO } from "./anuncio/AnuncioStudentAdvisor";
-import { AnuncioV2Previa, DURACAO_PREVIA_QUADROS } from "./anuncio/AnuncioV2";
+import { AnuncioV2, DURACAO_QUADROS as DURACAO_ANUNCIO_V2 } from "./anuncio/AnuncioV2";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -41,9 +41,9 @@ export const RemotionRoot: React.FC = () => {
         height={HEIGHT}
       />
       <Composition
-        id="AnuncioV2Previa"
-        component={AnuncioV2Previa}
-        durationInFrames={DURACAO_PREVIA_QUADROS}
+        id="AnuncioV2"
+        component={AnuncioV2}
+        durationInFrames={DURACAO_ANUNCIO_V2}
         fps={FPS}
         width={WIDTH}
         height={HEIGHT}

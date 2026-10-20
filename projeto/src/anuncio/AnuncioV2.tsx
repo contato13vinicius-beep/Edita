@@ -1,259 +1,124 @@
-import { loadFont } from "@remotion/fonts";
 import { Audio } from "@remotion/media";
+import { AbsoluteFill, Easing, Sequence, interpolate, staticFile, useCurrentFrame } from "remotion";
 import {
-  AbsoluteFill,
-  Easing,
-  Sequence,
-  interpolate,
-  staticFile,
-  useCurrentFrame,
-} from "remotion";
-import { Arvore, Cores, Estudante, Nuvem, PredioCampus } from "./Ilustracoes";
-import { PALAVRAS_CENA_1 } from "./palavras";
+  CenaBiblioteca,
+  CenaCampus,
+  CenaFinal,
+  CenaFormatura,
+  CenaGrafico,
+  CenaNotificacao,
+  CenaSala,
+} from "./Cenas";
+import { PALAVRAS } from "./palavras";
+import {
+  ARQUIVO_MUSICA,
+  ARQUIVO_NARRACAO,
+  CENA_BIBLIOTECA,
+  CENA_CAMINHADA,
+  CENA_CAMPUS,
+  CENA_FINAL,
+  CENA_FORMATURA,
+  CENA_GRAFICO,
+  CENA_NOTIFICACAO,
+  CENA_SALA,
+  COR_AZUL_PROFUNDO,
+  COR_AZUL_SUAVE,
+  COR_BRANCO,
+  COR_FUNDO_TOPO,
+  COR_LAVANDA,
+  COR_MENTA,
+  COR_TEXTO,
+  DURACAO_QUADROS,
+  FONTE,
+  LEGENDA_TAMANHO,
+  LEGENDA_Y,
+  SOM_CLIQUE,
+  SOM_CONCLUSAO,
+  SOM_ITEM,
+  SOM_TRANSICAO,
+  VOLUME_MUSICA,
+  seg,
+} from "./tema";
 
-// ---- Constantes editáveis (trocar aqui, sem mexer no resto) ----
-export const FPS = 30;
-export const DURACAO_PREVIA_SEGUNDOS = 5;
-export const DURACAO_PREVIA_QUADROS = DURACAO_PREVIA_SEGUNDOS * FPS;
+export { DURACAO_QUADROS };
 
-// Paleta: branco, azul suave, azul profundo, lavanda e verde-menta
-export const COR_FUNDO_TOPO = "#f7f8ff";
-export const COR_FUNDO_BASE = "#e6ebff";
-export const COR_AZUL_PROFUNDO = "#1b2a6b";
-export const COR_AZUL_SUAVE = "#6e8cf5";
-export const COR_LAVANDA = "#c7b9ff";
-export const COR_MENTA = "#6fe3c1";
-export const COR_TEXTO = "#14183a";
-export const COR_BRANCO = "#ffffff";
+const FIM = (cena: { inicio: number; fim: number }) => seg(cena.fim - cena.inicio);
 
-// Tipografia (Plus Jakarta Sans, arquivo local em public/anuncio/fonts)
-export const NOME_FONTE = "Plus Jakarta Sans";
-export const ARQUIVO_FONTE = "anuncio/fonts/plus-jakarta-sans-latin-800-normal.woff2";
-export const FONTE = `"${NOME_FONTE}", "Helvetica Neue", Arial, sans-serif`;
+// Transições gráficas: um painel arredondado cruza a tela e conecta as cenas.
+// Cortes principais usam o painel mais longo; os cortes dentro de uma cena, o curto.
+const CORTES = [
+  { t: CENA_SALA.inicio, longo: true },
+  { t: CENA_BIBLIOTECA.inicio, longo: false },
+  { t: CENA_NOTIFICACAO.inicio, longo: false },
+  { t: CENA_FORMATURA.inicio, longo: true },
+  { t: CENA_GRAFICO.inicio, longo: false },
+  { t: CENA_CAMINHADA.inicio, longo: true },
+  { t: CENA_FINAL.inicio, longo: false },
+];
 
-// Legendas palavra por palavra
-export const LEGENDA_Y = 1640;
-export const LEGENDA_TAMANHO = 112;
-export const PALAVRAS_DESTAQUE_VISUAL = ["universidade", "financiamento", "governo"];
-
-// Áudio
-export const ARQUIVO_NARRACAO = "anuncio/narracao-v2-cena1.mp3";
-export const ARQUIVO_MUSICA = "estudar/musica.mp3";
-export const VOLUME_MUSICA = 0.08;
-export const SOM_ABERTURA = "sfx/pop.wav";
-
-// Carrega a fonte local antes do render. Sem isso, o Remotion usaria a fonte padrão.
-loadFont({
-  family: NOME_FONTE,
-  url: staticFile(ARQUIVO_FONTE),
-  weight: "800",
-});
-
-const seg = (s: number) => Math.round(s * FPS);
-
-const CORES_ESTUDANTE_A: Cores = {
-  pele: "#f2c4a0",
-  cabelo: "#2b2140",
-  camisa: "#6e8cf5",
-  calca: "#1b2a6b",
-  mochila: "#6fe3c1",
-};
-const CORES_ESTUDANTE_B: Cores = {
-  pele: "#8d5a3b",
-  cabelo: "#14183a",
-  camisa: "#c7b9ff",
-  calca: "#2c3e7a",
-  mochila: "#1b2a6b",
-};
-const CORES_ESTUDANTE_C: Cores = {
-  pele: "#e8b890",
-  cabelo: "#c97b3a",
-  camisa: "#6fe3c1",
-  calca: "#14183a",
-  mochila: "#6e8cf5",
-};
-
-// Fundo com gradiente suave e manchas de luz em movimento lento
-const FundoClaro: React.FC = () => {
+const Transicoes: React.FC = () => {
   const frame = useCurrentFrame();
-  const deriva = interpolate(frame, [0, seg(DURACAO_PREVIA_SEGUNDOS)], [0, 40], { extrapolateRight: "clamp" });
   return (
-    <AbsoluteFill style={{ background: `linear-gradient(180deg, ${COR_FUNDO_TOPO} 0%, ${COR_FUNDO_BASE} 100%)` }}>
-      <div
-        style={{
-          position: "absolute",
-          width: 700,
-          height: 700,
-          borderRadius: 350,
-          left: -180 + deriva,
-          top: 120,
-          background: `radial-gradient(circle, ${COR_LAVANDA} 0%, rgba(199,185,255,0) 70%)`,
-          opacity: 0.6,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          width: 600,
-          height: 600,
-          borderRadius: 300,
-          right: -160 - deriva,
-          top: 900,
-          background: `radial-gradient(circle, ${COR_AZUL_SUAVE} 0%, rgba(110,140,245,0) 70%)`,
-          opacity: 0.25,
-        }}
-      />
-    </AbsoluteFill>
+    <>
+      {CORTES.map((corte) => {
+        const meio = seg(corte.t);
+        const metade = corte.longo ? 9 : 6;
+        if (frame < meio - metade || frame > meio + metade) {
+          return null;
+        }
+        const x = interpolate(frame, [meio - metade, meio + metade], [1200, -1700], {
+          easing: Easing.inOut(Easing.cubic),
+        });
+        return (
+          <div
+            key={`t-${corte.t}`}
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              left: x,
+              width: 1500,
+              borderRadius: "700px 0 0 700px",
+              background: `linear-gradient(90deg, ${COR_LAVANDA} 0%, ${COR_AZUL_SUAVE} 100%)`,
+              boxShadow: `-30px 0 0 ${COR_MENTA}`,
+            }}
+          />
+        );
+      })}
+    </>
   );
 };
 
-// Cena do campus: câmera com zoom suave e parallax entre céu, prédio, árvores e estudantes
-const CenaCampus: React.FC = () => {
-  const frame = useCurrentFrame();
-  const duracao = seg(DURACAO_PREVIA_SEGUNDOS);
-  const zoom = interpolate(frame, [0, duracao], [1, 1.06], { extrapolateRight: "clamp" });
-  const cameraX = interpolate(frame, [0, duracao], [10, -10], { extrapolateRight: "clamp" });
-  const paralaxeFundo = interpolate(frame, [0, duracao], [0, -14], { extrapolateRight: "clamp" });
-  const paralaxeMeio = interpolate(frame, [0, duracao], [0, -28], { extrapolateRight: "clamp" });
-
-  return (
-    <AbsoluteFill style={{ overflow: "hidden" }}>
-      <svg
-        width="1080"
-        height="1920"
-        viewBox="0 0 1080 1920"
-        style={{ position: "absolute", inset: 0, transform: `scale(${zoom}) translateX(${cameraX}px)`, transformOrigin: "50% 60%" }}
-      >
-        {/* Céu: nuvens com parallax mais lento */}
-        <g transform={`translate(${paralaxeFundo} 0)`}>
-          <Nuvem x={0} y={600} escala={0.9} cor="#ffffff" />
-        </g>
-
-        {/* Árvores atrás do prédio */}
-        <g transform={`translate(${paralaxeMeio * 0.6} 0)`}>
-          <Arvore x={70} y={980} escala={1.1} cor="#bdebd6" tronco="#8a6e5a" />
-          <Arvore x={1010} y={960} escala={1.25} cor="#9bddc0" tronco="#8a6e5a" />
-        </g>
-
-        {/* Prédio do campus */}
-        <g transform={`translate(${paralaxeMeio * 0.35} 0)`}>
-          <PredioCampus corPredio="#e4e9fb" corSombra={COR_AZUL_SUAVE} corTeto={COR_AZUL_PROFUNDO} />
-        </g>
-
-        {/* Gramado e caminho até a entrada */}
-        <rect x={0} y={1224} width={1080} height={696} fill="#cff3e2" />
-        <polygon points="500,1224 580,1224 770,1920 310,1920" fill="#f4f6ff" opacity={0.92} />
-
-        {/* Estudantes chegando, em primeiro plano */}
-        <Estudante de={-40} para={330} baseY={1500} inicio={0} duracao={seg(4)} cores={CORES_ESTUDANTE_A} />
-        <Estudante de={1120} para={740} baseY={1500} inicio={seg(0.6)} duracao={seg(4)} cores={CORES_ESTUDANTE_B} escala={0.96} />
-        <Estudante de={-60} para={200} baseY={1430} inicio={seg(1.2)} duracao={seg(4)} cores={CORES_ESTUDANTE_C} escala={0.84} />
-      </svg>
-    </AbsoluteFill>
-  );
-};
-
-// Título com revelação por máscara e linha de destaque em verde-menta
-const Titulo: React.FC = () => {
-  const frame = useCurrentFrame();
-
-  const revelar = (inicioQuadro: number) =>
-    interpolate(frame, [inicioQuadro, inicioQuadro + 14], [110, 0], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-      easing: Easing.out(Easing.cubic),
-    });
-
-  const linhaDestaque = interpolate(frame, [seg(0.5), seg(1.1)], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.out(Easing.cubic),
-  });
-
-  return (
-    <div style={{ position: "absolute", top: 180, left: 70, right: 70 }}>
-      <div style={{ overflow: "hidden", height: 170 }}>
-        <div
-          style={{
-            fontFamily: FONTE,
-            fontWeight: 800,
-            fontSize: 150,
-            lineHeight: 1,
-            color: COR_AZUL_PROFUNDO,
-            transform: `translateY(${revelar(seg(0.1))}%)`,
-          }}
-        >
-          ESTUDE
-        </div>
-      </div>
-      <div style={{ overflow: "hidden", height: 110 }}>
-        <div
-          style={{
-            fontFamily: FONTE,
-            fontWeight: 800,
-            fontSize: 96,
-            lineHeight: 1,
-            color: COR_AZUL_PROFUNDO,
-            transform: `translateY(${revelar(seg(0.3))}%)`,
-          }}
-        >
-          NO REINO UNIDO
-        </div>
-      </div>
-      <div
-        style={{
-          marginTop: 14,
-          height: 10,
-          borderRadius: 5,
-          width: "100%",
-          background: COR_MENTA,
-          transform: `scaleX(${linhaDestaque})`,
-          transformOrigin: "left center",
-        }}
-      />
-    </div>
-  );
-};
-
-// Legenda palavra por palavra: só uma palavra aparece por vez, sincronizada com a narração
+// Legenda palavra por palavra: só uma palavra por vez, sincronizada com a narração
 const LegendaPalavras: React.FC = () => {
   const frame = useCurrentFrame();
-  const agora = frame / FPS;
-  const ativa = PALAVRAS_CENA_1.findIndex((p) => agora >= p.t && agora < p.t + p.d + 0.12);
+  const agora = frame / 30;
+  const ativa = PALAVRAS.findIndex((p) => agora >= p.t && agora < p.t + p.d + 0.1);
   if (ativa === -1) {
     return null;
   }
-  const palavra = PALAVRAS_CENA_1[ativa];
+  const palavra = PALAVRAS[ativa];
   const desde = frame - seg(palavra.t);
   const escala = interpolate(desde, [0, 4, 9], [0.78, 1.06, 1], { extrapolateRight: "clamp" });
   const subida = interpolate(desde, [0, 6], [22, 0], { extrapolateRight: "clamp" });
   const opacidade = interpolate(desde, [0, 3], [0, 1], { extrapolateRight: "clamp" });
-  const destaque = PALAVRAS_DESTAQUE_VISUAL.includes(palavra.w.toLowerCase());
+  const tamanho = palavra.w.length > 11 ? 88 : LEGENDA_TAMANHO;
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        top: LEGENDA_Y,
-        left: 0,
-        right: 0,
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
+    <div style={{ position: "absolute", top: LEGENDA_Y, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
       <div
         key={ativa}
         style={{
           fontFamily: FONTE,
           fontWeight: 800,
-          fontSize: LEGENDA_TAMANHO,
+          fontSize: tamanho,
           textTransform: "uppercase",
           lineHeight: 1,
-          padding: "26px 44px 30px",
+          padding: "24px 44px 28px",
           borderRadius: 40,
-          color: destaque ? COR_BRANCO : COR_TEXTO,
-          background: destaque ? COR_AZUL_PROFUNDO : COR_BRANCO,
-          boxShadow: "0 18px 40px rgba(27,42,107,0.18)",
+          color: palavra.destaque ? COR_BRANCO : COR_TEXTO,
+          background: palavra.destaque ? COR_AZUL_PROFUNDO : COR_BRANCO,
+          boxShadow: "0 18px 40px rgba(27,42,107,0.2)",
           opacity: opacidade,
           transform: `translateY(${subida}px) scale(${escala})`,
           whiteSpace: "nowrap",
@@ -265,16 +130,58 @@ const LegendaPalavras: React.FC = () => {
   );
 };
 
-export const AnuncioV2Previa: React.FC = () => {
+// Um som por evento, sempre em instantes diferentes
+const SOM = (inicio: number, arquivo: string, volume: number, duracao = 1) => (
+  <Sequence key={`${arquivo}-${inicio}`} from={seg(inicio)} durationInFrames={seg(duracao)}>
+    <Audio src={staticFile(arquivo)} volume={volume} />
+  </Sequence>
+);
+
+export const AnuncioV2: React.FC = () => {
   return (
-    <AbsoluteFill>
-      <FundoClaro />
-      <CenaCampus />
-      <Titulo />
-      <LegendaPalavras />
-      <Sequence from={seg(0.1)} durationInFrames={seg(0.8)}>
-        <Audio src={staticFile(SOM_ABERTURA)} volume={0.5} />
+    <AbsoluteFill style={{ background: COR_FUNDO_TOPO }}>
+      <Sequence durationInFrames={FIM(CENA_CAMPUS)} name="Cena 1 - Campus">
+        <CenaCampus duracao={CENA_CAMPUS.fim - CENA_CAMPUS.inicio} comTitulo variante="chegada" />
       </Sequence>
+      <Sequence from={seg(CENA_SALA.inicio)} durationInFrames={FIM(CENA_SALA)} name="Cena 2a - Sala de aula">
+        <CenaSala duracao={CENA_SALA.fim - CENA_SALA.inicio} />
+      </Sequence>
+      <Sequence from={seg(CENA_BIBLIOTECA.inicio)} durationInFrames={FIM(CENA_BIBLIOTECA)} name="Cena 2b - Biblioteca">
+        <CenaBiblioteca duracao={CENA_BIBLIOTECA.fim - CENA_BIBLIOTECA.inicio} />
+      </Sequence>
+      <Sequence from={seg(CENA_NOTIFICACAO.inicio)} durationInFrames={FIM(CENA_NOTIFICACAO)} name="Cena 2c - Notificacao">
+        <CenaNotificacao duracao={CENA_NOTIFICACAO.fim - CENA_NOTIFICACAO.inicio} />
+      </Sequence>
+      <Sequence from={seg(CENA_FORMATURA.inicio)} durationInFrames={FIM(CENA_FORMATURA)} name="Cena 3a - Formatura">
+        <CenaFormatura duracao={CENA_FORMATURA.fim - CENA_FORMATURA.inicio} />
+      </Sequence>
+      <Sequence from={seg(CENA_GRAFICO.inicio)} durationInFrames={FIM(CENA_GRAFICO)} name="Cena 3b - Grafico de renda">
+        <CenaGrafico duracao={CENA_GRAFICO.fim - CENA_GRAFICO.inicio} />
+      </Sequence>
+      <Sequence from={seg(CENA_CAMINHADA.inicio)} durationInFrames={FIM(CENA_CAMINHADA)} name="Cena 4a - Caminhada">
+        <CenaCampus duracao={CENA_CAMINHADA.fim - CENA_CAMINHADA.inicio} comTitulo={false} variante="caminhada" />
+      </Sequence>
+      <Sequence from={seg(CENA_FINAL.inicio)} durationInFrames={FIM(CENA_FINAL)} name="Cena 4b - Student Advisor">
+        <CenaFinal duracao={CENA_FINAL.fim - CENA_FINAL.inicio} />
+      </Sequence>
+
+      <Transicoes />
+      <LegendaPalavras />
+
+      {/* Sons suaves nas transições e nos itens, um por evento */}
+      {SOM(CENA_SALA.inicio - 0.1, SOM_TRANSICAO, 0.35)}
+      {SOM(CENA_BIBLIOTECA.inicio - 0.05, SOM_CLIQUE, 0.4, 0.5)}
+      {SOM(CENA_NOTIFICACAO.inicio - 0.05, SOM_CLIQUE, 0.4, 0.5)}
+      {SOM(CENA_FORMATURA.inicio - 0.1, SOM_TRANSICAO, 0.35)}
+      {SOM(CENA_GRAFICO.inicio - 0.05, SOM_CLIQUE, 0.4, 0.5)}
+      {SOM(CENA_CAMINHADA.inicio - 0.1, SOM_TRANSICAO, 0.35)}
+      {SOM(CENA_SALA.inicio + 0.45, SOM_ITEM, 0.45)}
+      {SOM(CENA_BIBLIOTECA.inicio + 0.35, SOM_ITEM, 0.45)}
+      {SOM(CENA_NOTIFICACAO.inicio + 0.25, SOM_ITEM, 0.4)}
+      {SOM(CENA_NOTIFICACAO.inicio + 0.7, SOM_ITEM, 0.4)}
+      {SOM(CENA_GRAFICO.inicio + 1.5, SOM_ITEM, 0.5)}
+      {SOM(CENA_FINAL.inicio + 1.75, SOM_CONCLUSAO, 0.55, 1.5)}
+
       <Audio src={staticFile(ARQUIVO_NARRACAO)} />
       <Audio src={staticFile(ARQUIVO_MUSICA)} volume={VOLUME_MUSICA} loop />
     </AbsoluteFill>

@@ -38,3 +38,10 @@ Nota fixa na tela final: "Sujeito aos critérios de elegibilidade do Student Fin
 - Narração: voz de teste MBROLA pt-BR (robotizada). Trocar pela voz final no mesmo arquivo.
 - Imagens: placeholders em `public/anuncio/`. Trocar pelas fotos reais (ver `public/anuncio/LEIA-ME.txt`).
 - Trilha e sons: reaproveitados de `public/estudar/` e `public/sfx/`.
+
+## Versão 2 (visual aprovado): produção concluída
+- Composição `AnuncioV2` (22 s, 1080×1920, 30 fps), render em `exports/anuncio-student-advisor.mp4`.
+- Visual: ilustrações vetoriais animadas (campus, sala de aula, biblioteca, celular com notificação, formatura, gráfico de renda), paleta branco, azul, lavanda e verde-menta, fonte Plus Jakarta Sans, transições por painel e legendas palavra por palavra.
+- Cenas: campus 0–4 s, sala 4–6,5 s, biblioteca 6,5–8,4 s, celular 8,4–10 s, formatura 10–13 s, gráfico de renda 13–16 s, caminhada 16–18,3 s, tela final 18,3–22 s.
+- Textos, cores, fonte e tempos das cenas ficam no topo de `src/anuncio/tema.ts`.
+- Pendências: trocar a narração de teste (MBROLA) por voz natural; os tempos das palavras (`src/anuncio/palavras.ts`) são aproximados pelas sílabas e precisam ser regerados com a nova voz; trocar a trilha por música moderna; confirmar a frase de elegibilidade do gancho.
