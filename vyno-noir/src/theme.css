@@ -1,0 +1,30 @@
+/* =========================================================
+   VYNO NOIR — tema (cores e tipografia)
+   Para mudar a identidade, edite apenas este arquivo.
+   ========================================================= */
+@font-face { font-family: "VN Brush"; src: url("../assets/fonts/CaveatBrush-Regular.ttf"); }
+@font-face { font-family: "VN Note";  src: url("../assets/fonts/Caveat-Variable.ttf"); font-weight: 400 700; }
+@font-face { font-family: "VN Text";  src: url("../assets/fonts/PatrickHand-Regular.ttf"); }
+
+:root {
+  /* principais */
+  --ink: #111111;
+  --graphite: #252525;
+  --paper: #F8F6F0;
+  --beige: #D9C9AE;
+  /* destaques (usar com moderação) */
+  --yellow: #F7D76A;
+  --blue: #83C9EB;
+  --mint: #8ADBC0;
+  --pink: #F2A5D0;
+  --lilac: #C8A5EE;
+
+  /* tipografia */
+  --font-title: "VN Brush", "Caveat Brush", cursive;   /* títulos: pincel/marcador */
+  --font-note:  "VN Note", "Caveat", cursive;          /* notas, subtítulos */
+  --font-text:  "VN Text", "Patrick Hand", sans-serif; /* listas */
+
+  /* cor de destaque do slide (sobrescrita por slide) */
+  --accent: var(--yellow);
+  --accent2: var(--pink);
+}
