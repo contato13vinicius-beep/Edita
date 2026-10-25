@@ -1,27 +1,24 @@
-# VYNO NOIR — carrossel "Lifestyle Roadmap"
+# VYNO NOIR — carrossel "Lifestyle Roadmap" (v2)
 
-Saída: `out/vyno-noir-01-capa.png` … `09-liberdade.png` (1080×1350, PNG) e `out/vyno-noir-preview.png` (grade de revisão).
+Saída: `out/vyno-noir-01-capa.png` … `09-liberdade.png` (1080×1350, 4:5) e `out/vyno-noir-preview.png`.
+Versão anterior (colorida) preservada em `versions/`.
 
 ## Gerar
 ```
-node src/build.js            # todos os slides + prévia + QA (corte/sobreposição/margens)
-node src/build.js --only 03  # só um slide
-node src/build.js --flags    # marca os slots de foto ainda sem foto real
+node src/build.js            # todos os slides + prévia + QA automático
+node src/build.js --only 03  # um slide
 ```
 Requer Node + Playwright (Chromium).
 
 ## Estrutura
-- `src/theme.css` — cores e fontes (mude aqui a identidade).
-- `src/base.css` — template: papel quadriculado, espiral, títulos, listas, notas, polaroids.
-- `src/content.js` — textos e posição de cada ilustração/foto de cada slide.
-- `src/illustrations.js` — ilustrações SVG e cenas-substitutas das fotos.
-- `src/build.js` — renderização, QA e prévia.
-- `assets/fonts` — Caveat Brush (títulos), Caveat (notas), Patrick Hand (listas).
+- `src/theme.css` — paleta (preto, grafite, off-white, champagne, espresso, cinza) e fontes. Mude a identidade aqui.
+- `src/base.css` — template: papel, lombada, títulos de marcador, checklist, impressões com fita, notas.
+- `src/content.js` — textos, `layout` e fotos de cada slide. `*palavra*` = marca-texto; `{{palavra}}` = círculo à mão.
+- `src/build.js` — layouts (cover, split, band, left, listfirst, collage, bleedright, bleedbottom, closing), QA e prévia.
+- `assets/photos/` — fotografias. `photo-prompts.md` descreve cada cena.
+
+## Fotos
+Sem arquivo em `assets/photos/<slot>.jpg`, o slide mostra um espaço reservado identificado. Slots: capa, rotina, carreira, academia, dinheiro, viagem-aeroporto, viagem-aviao, viagem-praia, viagem-destino, carro, familia, liberdade. Salve e rode o build.
 
 ## Novo carrossel
-1. Copie um objeto de `slides` em `content.js`: troque `file`, `n`, `accent`, `titleLines`, `sub`, `items` (use `*palavra*` para marca-texto) e `noteText`.
-2. Posicione `decor` (ilustrações da biblioteca), `photos` (polaroids) ou `circles` (foto circular).
-3. Ajuste `total` e rode `node src/build.js`. Leia os alertas do QA.
-
-## Fotos reais
-Os polaroids usam cenas ilustradas como substituto. Para trocar, salve `assets/photos/<slot>.jpg` (slots: carreira, academia, viagem-praia, viagem-cidade, estrada, familia-1, familia-2) e rode o build — são usadas automaticamente. A foto circular (capa, slide 7 e 9) vem de `assets/photos/personagem.jpg`.
+Copie um slide em `content.js`, escolha um `layout`, troque textos/`n`/foto e ajuste `total`.

@@ -82,3 +82,13 @@ body { font-family: var(--font-text); color: var(--graphite); -webkit-font-smoot
 .dots i.on { background: var(--champagne); border-color: var(--graphite); }
 .swipe { position: absolute; right: 64px; bottom: 34px; z-index: 12; display: flex; align-items: center; gap: 16px; font-size: 32px; letter-spacing: .24em; color: var(--graphite); }
 .swipe svg { width: 84px; height: 30px; overflow: visible; filter: url(#rough); }
+
+.photo.sm .ph { padding: 14px; gap: 8px; }
+.photo.sm .ph::before { inset: 10px; }
+.photo.sm .ph .label { font-size: 22px; letter-spacing: .16em; }
+.photo.sm .ph p { font-size: 26px; }
+.photo.sm .ph .dim { font-size: 18px; letter-spacing: .1em; }
+.light-ui .dots i { border-color: var(--paper); }
+.light-ui .dots i.on { border-color: var(--paper); }
+.light-ui .swipe { color: var(--paper); text-shadow: 0 1px 6px rgba(0,0,0,.6); }
+.photo .ph.top { justify-content: flex-start; padding-top: 40px; }
