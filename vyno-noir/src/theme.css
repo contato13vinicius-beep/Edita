@@ -1,30 +1,29 @@
 /* =========================================================
-   VYNO NOIR — tema (cores e tipografia)
+   VYNO NOIR v2 — tema (cores e tipografia)
    Para mudar a identidade, edite apenas este arquivo.
    ========================================================= */
 @font-face { font-family: "VN Brush"; src: url("../assets/fonts/CaveatBrush-Regular.ttf"); }
 @font-face { font-family: "VN Note";  src: url("../assets/fonts/Caveat-Variable.ttf"); font-weight: 400 700; }
 @font-face { font-family: "VN Text";  src: url("../assets/fonts/PatrickHand-Regular.ttf"); }
+@font-face { font-family: "VN Serif"; src: url("../assets/fonts/PlayfairDisplay-Italic.ttf"); font-weight: 400 900; font-style: italic; }
+@font-face { font-family: "VN Label"; src: url("../assets/fonts/BarlowCondensed-SemiBold.ttf"); }
 
 :root {
   /* principais */
-  --ink: #111111;
-  --graphite: #252525;
-  --paper: #F8F6F0;
-  --beige: #D9C9AE;
-  /* destaques (usar com moderação) */
-  --yellow: #F7D76A;
-  --blue: #83C9EB;
-  --mint: #8ADBC0;
-  --pink: #F2A5D0;
-  --lilac: #C8A5EE;
+  --black: #101010;
+  --graphite: #242424;
+  --paper: #F3F0E9;       /* off-white: base das páginas */
+  --stone: #A8A49D;       /* cinza quente */
+  --champagne: #C6AD83;   /* destaque principal */
+  /* secundárias */
+  --espresso: #493B32;
+  --fog: #D8D5CE;         /* cinza claro */
+  --white: #FFFFFF;
 
   /* tipografia */
-  --font-title: "VN Brush", "Caveat Brush", cursive;   /* títulos: pincel/marcador */
-  --font-note:  "VN Note", "Caveat", cursive;          /* notas, subtítulos */
-  --font-text:  "VN Text", "Patrick Hand", sans-serif; /* listas */
-
-  /* cor de destaque do slide (sobrescrita por slide) */
-  --accent: var(--yellow);
-  --accent2: var(--pink);
+  --font-title: "VN Brush", "Caveat Brush", cursive;       /* títulos: marcador/brush */
+  --font-note:  "VN Note", "Caveat", cursive;              /* anotações */
+  --font-text:  "VN Text", "Patrick Hand", sans-serif;     /* listas */
+  --font-serif: "VN Serif", "Playfair Display", serif;     /* subtítulos editoriais */
+  --font-label: "VN Label", "Barlow Condensed", sans-serif;/* rótulos em caixa-alta */
 }
